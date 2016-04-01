@@ -1,0 +1,16 @@
+---
+  - name: Install Zsh
+    apt: name=zsh state=installed
+
+  - name: Installing oh-my-zsh per user
+    shell: curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+    become: no
+
+  - name: Setting default shell
+    shell: "chsh -s /usr/bin/zsh {{ ansible_user }}"
+
+  - name: Configuring oh-my-zsh
+    template:
+      src: home-zshrc.j2
+      dest: "~/.zshrc"
+    become: no

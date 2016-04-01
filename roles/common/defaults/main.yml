@@ -1,0 +1,19 @@
+---
+main_pkg:
+  - mc
+  - wget
+  - vim
+  - gcc
+  - unzip
+  - htop
+  - tmux
+  - curl
+  - pkg-config
+  - python-pip
+  - python-dev
+  - libpq-dev
+  - build-essential
+  - python-pycurl
+
+setup_zsh: True
+project_name: django_test

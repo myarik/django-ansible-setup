@@ -1,0 +1,25 @@
+---
+  - name: Define git name.
+    set_fact:
+      aws_profile: "{{project_name}}"
+    when: git_user_name is not defined
+
+  - name: Define a git email
+    set_fact:
+      ec2_port_list: git@{{project_name}}
+    when: git_email is not defined
+
+  - name: install git
+    apt: name={{ item }} state=installed update_cache=true
+    with_items:
+      - git
+      - git-core
+    register: gitinstalled
+
+  - name: setup_git
+    when: gitinstalled | success
+    shell: git config --global {{ item.command }} "{{item.value}}"
+    with_items:
+      - {command: user.name, value: "{{git_user_name}}" }
+      - {command: user.email, value: "{{git_email}}" }
+    become: no
