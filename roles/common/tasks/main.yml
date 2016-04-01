@@ -1,0 +1,15 @@
+---
+- name: Perform Safe Upgrade
+  apt: upgrade=safe update_cache=yes
+
+- name: Install Pkg
+  apt: name={{ item }} state=installed update_cache=true
+  with_items: main_pkg
+
+- name: update ntp
+  shell: ntpdate pool.ntp.org
+
+- include: git.yml
+
+- include: zsh.yml
+  when: setup_zsh == True
