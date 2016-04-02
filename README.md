@@ -9,3 +9,5 @@ Role Variables
 * `main_pkg`: List of main pkgs
 * `setup_zsh`: Setup zsh. Defaults is `true`.
 * `project_name`: Project name. Defaults is `django_test`
+* `git_user_name`: Git username. Defaults is project_name
+* `git_email`: Git user email. Defaults is `git@project_name`
