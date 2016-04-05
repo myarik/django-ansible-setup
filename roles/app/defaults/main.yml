@@ -1,0 +1,13 @@
+application_name: django_test
+application_path: /opt/{{application_name}}
+virtualenv_path: "{{application_path}}/.env"
+git_branch: master
+
+# Gunicorn
+gunicorn_num_workers: 2
+gunicorn_max_requests: 0
+
+# Django Environment variables
+requirements_file: "{{application_path}}/requirements.txt"
+django_environment:
+  DEBUG: False

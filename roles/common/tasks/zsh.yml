@@ -1,16 +1,19 @@
 ---
   - name: Install Zsh
     apt: name=zsh state=installed
+    register: installation
 
-  - name: Installing oh-my-zsh per user
-    shell: curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+  - name: Cloning  oh-my-zsh
+    git:
+      repo=https://github.com/robbyrussell/oh-my-zsh
+      dest=~/.oh-my-zsh
+    when: installation|success
+    register: cloning
     become: no
 
-  - name: Setting default shell
-    shell: "chsh -s /usr/bin/zsh {{ ansible_user }}"
-
-  - name: Configuring oh-my-zsh
-    template:
-      src: home-zshrc.j2
-      dest: "~/.zshrc"
+  - name: Creating new ~/.zshrc
+    copy:
+      src=~/.oh-my-zsh/templates/zshrc.zsh-template
+      dest=~/.zshrc
+    when: cloning|success
     become: no

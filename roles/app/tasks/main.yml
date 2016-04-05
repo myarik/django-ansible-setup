@@ -1,0 +1,5 @@
+---
+- include: install_additional_packages.yml
+  when: add_pkgs is defined
+
+- include: setup_application.yml

@@ -16,4 +16,5 @@ main_pkg:
   - python-pycurl
 
 setup_zsh: True
-project_name: django_test
+git_user_name: django_test
+git_email: git@django_test

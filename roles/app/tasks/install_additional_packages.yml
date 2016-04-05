@@ -1,0 +1,4 @@
+---
+  - name: Install Additional Packages
+    apt: name={{ item }} state=installed update_cache=true
+    with_items: add_pkgs
