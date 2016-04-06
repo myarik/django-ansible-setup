@@ -27,12 +27,13 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 
 # Programs meant to be run under supervisor should not daemonize themselves
 # (do not use --daemon).
-exec gunicorn \
+exec gunicorn {{django_wsgi}}\
     --name $NAME \
     --workers $NUM_WORKERS \
     --max-requests $MAX_REQUESTS \
     --timeout {{ gunicorn_timeout_seconds|default(30) }} \
     --user $USER --group $GROUP \
-    --log-level debug \
+    --log-level info \
     --bind unix:$SOCKFILE \
-    {{ application_name }}.wsgi
+    --chdir={{application_path}} \
+    --log-file=-
