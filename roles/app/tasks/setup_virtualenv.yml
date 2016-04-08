@@ -1,0 +1,16 @@
+---
+  - name: Install virtualenv
+    pip: name=virtualenv
+
+  - name: Create the virtualenv
+    command: virtualenv {{ virtualenv_path }} --no-site-packages
+             creates={{ virtualenv_path }}/bin/activate
+    become: no
+
+  - name: Create the virtualenv postactivate script to set environment variables
+    template:
+      src: virtualenv_postactivate.j2
+      dest: "{{ virtualenv_path }}/bin/postactivate"
+      mode: 0640
+      backup: yes
+    become: no

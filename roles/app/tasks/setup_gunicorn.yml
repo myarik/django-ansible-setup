@@ -1,0 +1,11 @@
+---
+  - name: Ensure gunicorn is installed
+    pip: virtualenv={{ virtualenv_path }} name=gunicorn
+
+  - name: Create the Gunicorn script file
+    template:
+      src: gunicorn_start.j2
+      dest: "{{ virtualenv_path }}/bin/gunicorn_start"
+      mode: 0755
+      backup: yes
+    become: no

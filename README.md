@@ -6,6 +6,11 @@ This playbook installs and configures a Django application. The user can specify
 
 Role Variables
 --------------
+*Configuration*
+
+* `application_name`: Application name. Defaults is `django_test`
+* `application_path`: Application path. Defaults is `/opt/{{application_name}}`
+
 *Common settings*
 
 * `main_pkg`: List of main pkgs
@@ -19,8 +24,6 @@ Role Variables
 * `add_pkgs`: List of additional packeges.
 * `git_repo`: Git Repository
 * `git_branch`: Git branch. Defaults is master
-* `application_name`: Application name. Defaults is `django_test`
-* `application_path`: Application path. Defaults is `/opt/{{application_name}}`
 * `virtualenv_path`: Application virtualenv. Defaults is `/opt/{{application_name}}/.env`
 * `gunicorn_num_workers`: The number of worker processes for handling requests. Default is 2
 * `gunicorn_max_requests`: The maximum number of requests a worker will process. Default is 0

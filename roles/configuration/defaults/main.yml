@@ -1,0 +1,2 @@
+application_name: django_test
+application_path: /opt/{{application_name}}

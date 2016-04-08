@@ -29,8 +29,6 @@ add_pkgs:
   - curl
   - llvm
 
-application_name: django_test
-application_path: /opt/{{application_name}}
 virtualenv_path: "{{application_path}}/.env"
 git_branch: master
 
