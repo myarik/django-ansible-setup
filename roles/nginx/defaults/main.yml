@@ -1,0 +1,52 @@
+---
+nginx_ubuntu_pkg:
+  - python-selinux
+  - nginx
+
+nginx_official_repo: False
+
+keep_only_specified: False
+
+nginx_installation_type: "packages"
+nginx_binary_name: "nginx"
+nginx_service_name: "{{nginx_binary_name}}"
+nginx_conf_dir: "/etc/nginx"
+
+nginx_user: "www-data"
+nginx_group: "{{nginx_user}}"
+
+nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
+
+nginx_worker_processes: "{{ ansible_processor_vcpus }}"
+nginx_worker_rlimit_nofile: 1024
+nginx_log_dir: "/var/log/nginx"
+
+nginx_events_params:
+  - worker_connections {% if nginx_max_clients is defined %}{{nginx_max_clients}}{% else %}512{% endif %}
+
+nginx_http_params:
+  - sendfile "on"
+  - tcp_nopush "on"
+  - tcp_nodelay "on"
+  - keepalive_timeout "65"
+  - access_log "{{nginx_log_dir}}/access.log"
+  - error_log "{{nginx_log_dir}}/error.log"
+  - server_tokens off
+  - types_hash_max_size 2048
+
+nginx_sites:
+  default:
+     - listen 80 default_server
+     - server_name _
+     - location /static/ { gzip_static on; gzip_http_version 1.1; gzip_proxied expired no-cache no-store private auth; gzip_disable "MSIE [1-6]\."; gzip_vary on; alias {{application_static_path}}; expires 30d;}
+     - location /media/ { gzip_static on; gzip_http_version 1.1; gzip_proxied expired no-cache no-store private auth; gzip_disable "MSIE [1-6]\."; gzip_vary on; alias {{application_media_path}}; expires 30d;}
+     - location / { proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header X-Real-IP $remote_addr; proxy_set_header Host $host; proxy_pass http://unix:{{ virtualenv_path }}/run/gunicorn.sock;}
+nginx_remove_sites: []
+
+nginx_configs: {}
+nginx_remove_configs: []
+
+nginx_auth_basic_files: {}
+nginx_remove_auth_basic_files: []
+
+nginx_daemon_mode: "on"

@@ -8,3 +8,7 @@
       - { role: app,
           tags: [webservers, setup_app]
       }
+      - { role: nginx,
+          when: setun_nginx is defined and setun_nginx,
+          tags: [webservers, setup_nginx]
+      }

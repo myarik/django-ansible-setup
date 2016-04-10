@@ -29,7 +29,6 @@ add_pkgs:
   - curl
   - llvm
 
-virtualenv_path: "{{application_path}}/.env"
 git_branch: master
 
 # Gunicorn

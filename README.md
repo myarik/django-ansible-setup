@@ -10,6 +10,10 @@ Role Variables
 
 * `application_name`: Application name. Defaults is `django_test`
 * `application_path`: Application path. Defaults is `/opt/{{application_name}}`
+* `application_static_path`: A static path. Defaults is `/opt/{{application_name}}/staticfiles`
+* `application_media_path`: A media path. Defaults is `/opt/{{application_name}}/media`
+* `virtualenv_path`: Application virtualenv. Defaults is `/opt/{{application_name}}/.env`
+* `setun_nginx`: Install and configure nginx. Default is True
 
 *Common settings*
 
@@ -24,7 +28,6 @@ Role Variables
 * `add_pkgs`: List of additional packeges.
 * `git_repo`: Git Repository
 * `git_branch`: Git branch. Defaults is master
-* `virtualenv_path`: Application virtualenv. Defaults is `/opt/{{application_name}}/.env`
 * `gunicorn_num_workers`: The number of worker processes for handling requests. Default is 2
 * `gunicorn_max_requests`: The maximum number of requests a worker will process. Default is 0
 
@@ -35,3 +38,4 @@ Role Variables
 * `django_settings_file`: Django settings file. Defaulr is {{application_path}}/config/settings/production.py
 * `django_wsgi`: Django wsgi file. Default is config.wsgi
 * `django_manage_commands`: List of django manage commands. Default is migrate and collectstatic
+
