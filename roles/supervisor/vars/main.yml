@@ -1,0 +1,6 @@
+# vars file for supervisor
+---
+supervisor_dependencies:
+  - python
+
+supervisor_configuration_file: /etc/supervisord.conf

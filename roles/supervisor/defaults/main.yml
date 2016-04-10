@@ -1,0 +1,37 @@
+# defaults file for supervisor
+---
+supervisor_version: latest
+supervisor_state: started
+supervisor_unix_http_server_file: /var/run/supervisor.sock
+supervisor_unix_http_server_chmod: '0700'
+
+supervisor_inet_http_server_enabled: false
+supervisor_inet_http_server_port: 9001
+supervisor_inet_http_server_username: admin
+supervisor_inet_http_server_password: 'T42GdDZPiGWe'
+
+supervisor_supervisord_logfile: /var/log/supervisor/supervisord.log
+supervisor_supervisord_pidfile: /var/run/supervisord.pid
+supervisor_supervisord_childlogdir: /var/log/supervisor
+
+supervisor_supervisorctl_serverurl: "unix://{{ supervisor_unix_http_server_file }}"
+
+supervisor_include: '/etc/supervisor/conf.d/*.conf'
+
+supervisor_programs_present:
+  app:
+    command: "{{ virtualenv_path }}/bin/gunicorn_start"
+    directory: "{{application_path}}"
+    autostart: true
+    autorestart: true
+    startretries: 3
+    stdout_logfile: /var/log/supervisor/app.log
+    stdout_logfile_maxbytes: 150MB
+    stderr_logfile: /var/log/supervisor/error_app.log
+    stderr_logfile_maxbytes: 150MB
+    user: "{{ansible_ssh_user}}"
+
+supervisor_programs_absent: {}
+supervisor_groups_present: {}
+supervisor_groups_absent: {}
+

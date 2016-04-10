@@ -1,0 +1,31 @@
+# tasks file for supervisor
+---
+- include: install.yml
+  tags:
+    - packages
+    - supervisor
+
+- include: configure.yml
+  tags:
+    - packages
+    - supervisor
+
+- include: programs.yml
+  tags:
+    - packages
+    - supervisor
+
+- include: groups.yml
+  tags:
+    - packages
+    - supervisor
+
+- name: start and enable service
+  service:
+    name: supervisor
+    state: "{{ supervisor_state }}"
+    enabled: true
+  tags:
+    - packages
+    - supervisor
+
