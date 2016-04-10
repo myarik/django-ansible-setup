@@ -2,4 +2,7 @@
 - include: install_additional_packages.yml
   when: add_pkgs is defined
 
-- include: setup_application.yml
+- include: get_application.yml
+- include: setup_virtualenv.yml
+- include: setup_gunicorn.yml
+- include: setup_django.yml

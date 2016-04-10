@@ -1,0 +1,15 @@
+---
+  - name: Install application required by the Django app inside virtualenv
+    pip: virtualenv={{ virtualenv_path }} requirements={{ requirements_file }}
+    become: no
+
+  - name: Run Django database migrations
+    django_manage:
+      command: "{{ item }}"
+      app_path: "{{ application_path }}"
+      virtualenv: "{{ virtualenv_path }}"
+    environment: "{{ django_environment }}"
+    when: django_manage_commands is defined and django_manage_commands
+    with_items: "{{django_manage_commands}}"
+    become: no
+

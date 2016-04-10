@@ -10,33 +10,6 @@
       accept_hostkey=yes
     become: no
 
-  - name: Install virtualenv
-    pip: name=virtualenv
-
-  - name: Create the virtualenv
-    command: virtualenv {{ virtualenv_path }} --no-site-packages
-             creates={{ virtualenv_path }}/bin/activate
-    become: no
-
-  - name: Ensure gunicorn is installed
-    pip: virtualenv={{ virtualenv_path }} name=gunicorn
-
-  - name: Create the virtualenv postactivate script to set environment variables
-    template:
-      src: virtualenv_postactivate.j2
-      dest: "{{ virtualenv_path }}/bin/postactivate"
-      mode: 0640
-      backup: yes
-    become: no
-
-  - name: Create the Gunicorn script file
-    template:
-      src: gunicorn_start.j2
-      dest: "{{ virtualenv_path }}/bin/gunicorn_start"
-      mode: 0755
-      backup: yes
-    become: no
-
   - name: Install application required by the Django app inside virtualenv
     pip: virtualenv={{ virtualenv_path }} requirements={{ requirements_file }}
     become: no
