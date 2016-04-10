@@ -1,1 +1,17 @@
-- include: appservers.yml
+---
+  - hosts: webservers
+    become: yes
+    roles:
+      - { role: common,
+          tags: [setup_common_pkg]
+      }
+      - { role: app,
+          tags: [setup_app]
+      }
+      - { role: nginx,
+          when: setun_nginx is defined and setun_nginx,
+          tags: [setup_nginx]
+      }
+      - { role: supervisor,
+          tags: [setup_supervisor]
+      }

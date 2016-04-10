@@ -1,0 +1,53 @@
+# tasks file for supervisor
+---
+- name: configure | stat directories
+  stat:
+    path: "{{ item }}/"
+  register: stat_directories
+  with_items:
+    - "{{ supervisor_configuration_file | dirname }}"
+    - "{{ supervisor_unix_http_server_file | dirname }}"
+    - "{{ supervisor_supervisord_logfile | dirname }}"
+    - "{{ supervisor_supervisord_pidfile | dirname }}"
+    - "{{ supervisor_supervisord_childlogdir }}"
+    - "{{ supervisor_include | dirname }}"
+  tags:
+    - supervisor-configure-directories
+    - supervisor-configure-directories-stat
+
+- name: configure | create directories
+  file:
+    path: "{{ item.item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items: stat_directories.results
+  when: item.stat.exists == false
+  tags:
+    - supervisor-configure-directories
+    - supervisor-configure-directories-create
+
+- name: configure | update configuration file - /etc/supervisord.conf
+  template:
+    src: etc/supervisor/supervisord.conf.j2
+    dest: "{{ supervisor_configuration_file }}"
+    owner: root
+    group: root
+    mode: 0640
+  notify: restart supervisor
+  tags:
+    - supervisor-configure-configuration
+    - supervisor-configure-configuration-supervisord-conf
+
+- name: configure | update init script - /etc/init.d/supervisor
+  template:
+    src: etc/init.d/supervisor.j2
+    dest: /etc/init.d/supervisor
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart supervisor
+  tags:
+    - supervisor-configure-configuration
+    - supervisor-configure-configuration-init

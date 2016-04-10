@@ -1,0 +1,5 @@
+[group:{{ item.key }}]
+programs={{ item.value.programs | join(',') }}
+{% if item.value.priority is defined %}
+priority={{ item.value.priority }}
+{% endif %}

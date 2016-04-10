@@ -2,6 +2,7 @@
 galaxy_info:
   author: "Yaroslav Muravsky"
   license: BSD
+  description: Set up the enviroment for Django application in Ubuntu systems
   min_ansible_version: 1.4
   platforms:
    - name: Ubuntu
