@@ -18,7 +18,8 @@ allow_duplicates: yes
 
 application_name: django_test
 application_path: /opt/{{application_name}}
-application_static_path: /opt/{{application_name}}/staticfiles
-application_media_path: /opt/{{application_name}}/media
+application_static_path: "{{application_path}}/staticfiles"
+application_media_path: "{{application_path}}/media"
 virtualenv_path: "{{application_path}}/.env"
-setun_nginx: true
+setup_nginx: true
+setup_postgresql: false

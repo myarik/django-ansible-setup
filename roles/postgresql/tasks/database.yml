@@ -1,0 +1,35 @@
+---
+# file: postgresql/tasks/databases.yml
+
+- name: PostgreSQL | Ensure PostgreSQL is running
+  service:
+    name: postgresql
+    state: started
+
+- name: PostgreSQL | Make sure the PostgreSQL databases are present
+  postgresql_db:
+    name: "{{database_name}}"
+    encoding: "{{postgresql_encoding}}"
+    lc_collate: "{{postgresql_locale}}"
+    lc_ctype: "{{postgresql_locale}}"
+    template: "template0"
+    state: present
+  sudo_user: "{{postgresql_admin_user}}"
+
+- name: PostgreSQL | Ensure user has access to the database
+  postgresql_user:
+    db: "{{ database_name }}"
+    name: "{{ database_user }}"
+    password: "{{ database_password }}"
+    priv: ALL
+    state: present
+    login_user: "{{postgresql_admin_user}}"
+  sudo_user: "{{postgresql_admin_user}}"
+
+- name: PostgreSQL | Ensure user does not have unnecessary privileges
+  sudo_user: postgres
+  postgresql_user:
+    name: "{{ database_user }}"
+    role_attr_flags: NOSUPERUSER,NOCREATEDB
+    state: present
+  sudo_user: "{{postgresql_admin_user}}"

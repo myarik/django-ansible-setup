@@ -5,11 +5,15 @@
       - { role: common,
           tags: [setup_common_pkg]
       }
+      - { role: postgresql,
+          when: setup_postgresql is defined and setup_postgresql,
+          tags: [setup_postgresql]
+      }
       - { role: app,
           tags: [setup_app]
       }
       - { role: nginx,
-          when: setun_nginx is defined and setun_nginx,
+          when: setup_nginx is defined and setup_nginx,
           tags: [setup_nginx]
       }
       - { role: supervisor,

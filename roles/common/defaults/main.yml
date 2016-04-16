@@ -17,4 +17,4 @@ main_pkg:
 
 setup_zsh: True
 git_user_name: "{{application_name}}"
-git_email: git@"{{application_name}}"
+git_email: git@{{application_name}}

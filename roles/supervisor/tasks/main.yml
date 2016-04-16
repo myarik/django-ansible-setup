@@ -20,12 +20,11 @@
     - packages
     - supervisor
 
-- name: start and enable service
-  service:
-    name: supervisor
-    state: "{{ supervisor_state }}"
-    enabled: true
-  tags:
-    - packages
-    - supervisor
 
+- name: Enabled the supervisor service
+  service: name=supervisor enabled=yes
+  tags: [packages,supervisor]
+
+- name: Start the supervisor service
+  service: name=supervisor state=started
+  tags: [packages,supervisor]
