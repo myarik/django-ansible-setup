@@ -9,6 +9,7 @@ Ansible Playbook for setting up a Django app. This playbook installs and configu
 - PostgreSQL
 
 **OS:** Ubuntu, Debian
+
 **Tested with Cloud Providers:** [Digital Ocean](https://www.digitalocean.com/), [Amazon](https://aws.amazon.com)
 
 Usage
@@ -17,12 +18,12 @@ Usage
 First, create an inventory file for the environment, for example:
 
 ```yml
-# development
 [webservers]
 django_test ansible_ssh_user=test
 ```
 
 Next, define variables
+
 ```yml
 - git_repo: "https://github.com/myarik/demo_django_ansible_setup.git"
 
@@ -30,7 +31,9 @@ Next, define variables
 
 Run the playbook:
 
-  ansible-playbook main.yml -i server.ini
+```
+ansible-playbook main.yml -i server.ini
+```
 
 When doing deployments, you can simply use the `--tags` option to only run those tasks with these tags.
 
@@ -40,7 +43,7 @@ Role Variables
 
 The user can specify parameters they wish to apply.
 
-*Configuration*
+**Configuration**
 
 * `application_name`: Application name. Defaults is `django_test`
 * `application_path`: Application path. Defaults is `/opt/{{application_name}}`
@@ -50,7 +53,7 @@ The user can specify parameters they wish to apply.
 * `setup_nginx`: Install and configure nginx. Default is True
 * `setup_postgresql`: Install PostgreSQL. Default is False
 
-*Common settings*
+**Common settings**
 
 * `main_pkg`: List of main pkgs
 * `setup_zsh`: Setup zsh. Defaults is `true`.
@@ -58,7 +61,7 @@ The user can specify parameters they wish to apply.
 * `git_email`: Git user email. Defaults is `git@django_test`
 
 
-*Application settings*
+**Application settings**
 
 * `add_pkgs`: List of additional packeges.
 * `git_repo`: Git Repository
@@ -66,16 +69,16 @@ The user can specify parameters they wish to apply.
 * `gunicorn_num_workers`: The number of worker processes for handling requests. Default is 2
 * `gunicorn_max_requests`: The maximum number of requests a worker will process. Default is 0
 
-*Django settings*
+**Django settings**
 
 * `django_environment`: Django Environment variables
 * `requirements_file`: Django requirement file. Default is `{{application_path}}/requirements.txt`
-* `django_settings_file`: Django settings file. Defaulr is {{application_path}}/config/settings/production
+* `django_settings_file`: Django settings file. Default is `{{application_path}}/config/settings/production`
 * `django_wsgi`: Django wsgi file. Default is config.wsgi
-* `django_manage_commands`: List of django manage commands. Default is migrate and collectstatic
+* `django_manage_commands`: List of django manage commands. Default is `migrate` and `collectstatic`
 
 
-*PostgreSQL settings*
+**PostgreSQL settings**
 * `postgresql_pgtune`: Install pgtune. Default is False
 * `postgresql_encoding`: Default is UTF-8
 * `database_name`: Database name
@@ -88,7 +91,7 @@ Examples
 
 For creating demo project, I used a [cookiecutter template for Django](https://github.com/pydanny/cookiecutter-django)
 
-1) Install and configre enviroment with PostgreSQL database. (Setup enviroment in Digital Ocean)
+1) Install and configre enviroment with PostgreSQL database. *(Setup enviroment in Digital Ocean)*
 
 `server.ini`
 
@@ -111,7 +114,7 @@ vars:
       DJANGO_ALLOWED_HOSTS: "*"
 ```
 
-2) Install and configre enviroment with Sqlite database. (Setup enviroment in AWS)
+2) Install and configre enviroment with Sqlite database. *(Setup enviroment in AWS)*
 
 `server.ini`
 
