@@ -62,5 +62,3 @@ target/
 .ipynb_checkpoints
 
 local.ini
-# My host vars
-host_vars/
